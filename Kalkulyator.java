@@ -3,11 +3,29 @@ import java.util.Scanner;
 public class Kalkulyator {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.print("Введите выражение, например 2+4 или IV+II, чтобы сделать расчёт: ");
-        String prim = in.nextLine();
+        System.out.print("Введите выражение: ");
+        String primStroka = in.nextLine();
+        String prim = primStroka.replaceAll(" ", ""); // удаляем все пробелы в строке вводимые пользователем
+        // System.out.println("Новое поле после удаления пробелов: " + prim); // вспомогательный код (спрятать)
 
         int word = prim.length(); // посчитать количество символов в строке с помощью функции length
         // System.out.println("Кол-во символов в строке: " + word);
+
+        // поиск знаков +, -, *, / если их больше одного калькулятор останавливает работу
+        int wordPlus = prim.replaceAll("[^+,]*", "").length();
+        int wordMinus = prim.replaceAll("[^-,]*", "").length();
+        int wordProiz = prim.replaceAll("[^*,]*", "").length();
+        int wordDelen = prim.replaceAll("[^/,]*", "").length();
+        int wordSumZnak = wordPlus + wordProiz + wordMinus + wordDelen;
+        // System.out.println("Кол-во символов + в строке: " + wordPlus); // вспомогательный код (спрятать)
+        // System.out.println("Кол-во символов - в строке: " + wordMinus); // вспомогательный код (спрятать)
+        // System.out.println("Кол-во символов * в строке: " + wordProiz); // вспомогательный код (спрятать)
+        // System.out.println("Кол-во символов / в строке: " + wordDelen); // вспомогательный код (спрятать)
+        // System.out.println("Сумма всех знаков +, -, *, / в строке: " + wordSumZnak); // вспомогательный код (спрятать)
+        if (wordSumZnak>1) {
+            System.out.println("Выражение не удовлетворяет условиям задания, так как должно быть два операнда и один оператор (+, -, *, /)");
+            return;
+        }
 
         // выводим результат расчёта в зависимости от кол-ва символов в строке ввода
         if (word == 0){
@@ -16,7 +34,7 @@ public class Kalkulyator {
             System.out.println("Строка не является математической операцией");
         } else if (prim.contains("I") || prim.contains("II") || prim.contains("III") || prim.contains("IV") || prim.contains("V") || prim.contains("VI") || prim.contains("VII") || prim.contains("VIII") || prim.contains("IX") || prim.contains("X")) {
             // ====== БЛОК ПО РАБОТЕ С РИМСКИМИ ЦИФРАМИ ======
-            // System.out.println("Есть римские цифры: I, II, III, IV, V, VI, VII, VIII, IX, X");
+            // System.out.println("Есть римские цифры: I, II, III, IV, V, VI, VII, VIII, IX, X"); // вспомогательный код (спрятать)
 
             // с помощью indexOf ищем где в строке встречается знак и выводим номер строки
             int plus = prim.indexOf("+");
@@ -24,16 +42,16 @@ public class Kalkulyator {
             int proiz = prim.indexOf("*");
             int delen = prim.indexOf("/");
 
-            String [] primSplit = prim.split("[+-/* ]"); // в квадратных [] скобках знаки, которые нужно удлаить из вводимой строки
+            String [] primSplit = prim.split("[+-/*]"); // в квадратных [] скобках знаки, которые нужно удлаить из вводимой строки
             for (int i=0; i<primSplit.length; i++) {
-                // System.out.println(primSplit[i]);
+                // System.out.println(primSplit[i]); // вспомогательный код (спрятать)
             }
 
             String a, b, c; // задаём значения a и b для primSplit, выводим отдельно эти значения из массива for primSplit
             a = primSplit[0];
             b = primSplit[1];
-            // System.out.println("Цифра a: " + a);
-            // System.out.println("Цифра b: " + b);
+            // System.out.println("Цифра a: " + a); // вспомогательный код (спрятать)
+            // System.out.println("Цифра b: " + b); // вспомогательный код (спрятать)
 
             // проверка сроки на наличие арабских и римских цифр с выводом ошибки
             if ((a.contains("I") || a.contains("II") || a.contains("III") || a.contains("IV") || a.contains("V") || a.contains("VI") || a.contains("VII") || a.contains("VIII") || a.contains("IX") || a.contains("X")) && (b.contains("1") || b.contains("2") || b.contains("3") || b.contains("4") || b.contains("5") || b.contains("6") || b.contains("7") || b.contains("8") || b.contains("9") || b.contains("10"))) {
@@ -79,9 +97,9 @@ public class Kalkulyator {
                     break;
                 default:
                     System.out.println("Калькулятор может работать только с числами от I до X включительно");
-                    break;
+                    return;
             }
-            // System.out.println("Цифра a при конвертации: " + rimA);
+            // System.out.println("Цифра a при конвертации: " + rimA); // вспомогательный код (спрятать)
 
             // создаём конвертер для значения b, с переводом строки в число, при этом первоначальное значение int надо поставить 0, чтобы в System.out.println, в конце вышел результат
             int rimB = 0;
@@ -118,9 +136,9 @@ public class Kalkulyator {
                     break;
                 default:
                     System.out.println("Калькулятор может работать только с числами от I до X включительно");
-                    break;
+                    return;
             }
-            // System.out.println("Цифра b при конвертации: " + rimB);
+            // System.out.println("Цифра b при конвертации: " + rimB); // вспомогательный код (спрятать)
 
             // арифметические операции после конвертации римских цифр, обязательно ставим = 0, чтобы в System.out.println, в конце вышел результат
             int rezultat = 0;
@@ -135,11 +153,11 @@ public class Kalkulyator {
             } else {
                 System.out.println("Ошибка в коде");
             }
-            // System.out.println("Результат: " + rezultat);
+            // System.out.println("Результат: " + rezultat); // вспомогательный код (спрятать)
 
             // преобразуем число в строку через Integer.toString
             String obratnoVTekst = Integer.toString(rezultat);
-            // System.out.println("Результат Integer.toString(rezultat): " + obratnoVTekst);
+            // System.out.println("Результат Integer.toString(rezultat): " + obratnoVTekst); // вспомогательный код (спрятать)
 
             // переводим обратно арабское цисло в рисмкое из предыдущего int rezultat
             String obratnoVRim = String.valueOf(0);
@@ -448,11 +466,11 @@ public class Kalkulyator {
                     if (rezultat<0) {
                         System.out.println("В римской системе нет отрицательных значений");
                     } else {
-                        System.out.println("Калькулятор не умеет считать больше C [100]");
+                        System.out.println("Расчёт невозможен, так как в римской системе нет цифры 0 (ноль)");
                     }
                     return;
             }
-            // System.out.println("Результат обратного перевода в римскую систему счисления через obratnoVRim: " + obratnoVRim);
+            // System.out.println("Результат обратного перевода в римскую систему счисления через obratnoVRim: " + obratnoVRim); // вспомогательный код (спрятать)
             System.out.println("Результат: " + obratnoVRim + " [" + obratnoVTekst + "]");
             // ====== КОНЕЦ БЛОК ПО РАБОТЕ С РИМСКИМИ ЦИФРАМИ ======
 
@@ -479,88 +497,93 @@ public class Kalkulyator {
             // удаляем из строки знаки "+", "-", "*", и "/"
             String [] primSplit = prim.split("[+-/* ]"); // в квадратных [] скобках знаки, которые нужно удлаить из вводимой строки
             for (int i=0; i<primSplit.length; i++) {
-                // System.out.println(primSplit[i]);
+                // System.out.println(primSplit[i]); // вспомогательный код (спрятать)
             }
 
             int a, b; // задаём после primSplit значения a и b для оставшихся цифр без учёта знака
             a = Integer.parseInt(primSplit[0]); // переводим текст в число после primSplit
             b = Integer.parseInt(primSplit[1]); // переводим текст в число после primSplit
-            // System.out.println("Перевод строки a в число: " + a);
-            // System.out.println("Перевод строки b в число: " + b);
+            // System.out.println("Перевод строки a в число: " + a); // вспомогательный код (спрятать)
+            // System.out.println("Перевод строки b в число: " + b); // вспомогательный код (спрятать)
+
+            if (b == 0) {
+                System.out.println("Делить на 0 (ноль) нельзя");
+                return;
+            }
 
             if (word == 3) {
-                // System.out.println("Условие 3 символа в строке");
+                // System.out.println("Условие 3 символа в строке"); // вспомогательный код (спрятать)
 
                 int rezultat;
                 if (a>=11 || b>=11) { // ограничение на число до 10 включительно
                     System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
                 } else {
                     if (plus > 0) {
-                        // System.out.println("Есть знак +, его индекс: " + plus);
+                        // System.out.println("Есть знак +, его индекс: " + plus); // вспомогательный код (спрятать)
                         rezultat = a+b;
                         System.out.println("Результат: " + rezultat);
                     } else if (minus > 0) {
-                        // System.out.println("Есть знак -, его индекс: " + minus);
+                        // System.out.println("Есть знак -, его индекс: " + minus); // вспомогательный код (спрятать)
                         rezultat = a-b;
                         System.out.println("Результат: " + rezultat);
                     } else if (proiz > 0) {
-                        // System.out.println("Есть знак *, его индекс: " + proiz);
+                        // System.out.println("Есть знак *, его индекс: " + proiz); // вспомогательный код (спрятать)
                         rezultat = a*b;
-                        System.out.println("Результат: " + rezultat);
+                        // System.out.println("Результат: " + rezultat);
                     } else if (delen > 0) {
-                        // System.out.println("Есть знак /, его индекс: " + delen);
+                        // System.out.println("Есть знак /, его индекс: " + delen); // вспомогательный код (спрятать)
                         rezultat = a/b;
                         System.out.println("Результат: " + rezultat);
                     }
                 }
 
             } else if (word == 4) {
-                // System.out.println("Условие 4 символа в строке");
+                // System.out.println("Условие 4 символа в строке"); // вспомогательный код (спрятать)
 
                 int rezultat;
                 if (a>=11 || b>=11) { // ограничение на число до 10 включительно
                     System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
                 } else {
                     if (plus > 0) {
-                        // System.out.println("Есть знак +, его индекс: " + plus);
+                        // System.out.println("Есть знак +, его индекс: " + plus); // вспомогательный код (спрятать)
                         rezultat = a+b;
                         System.out.println("Результат: " + rezultat);
                     } else if (minus > 0) {
-                        // System.out.println("Есть знак -, его индекс: " + minus);
+                        // System.out.println("Есть знак -, его индекс: " + minus); // вспомогательный код (спрятать)
                         rezultat = a-b;
                         System.out.println("Результат: " + rezultat);
                     } else if (proiz > 0) {
-                        // System.out.println("Есть знак *, его индекс: " + proiz);
+                        // System.out.println("Есть знак *, его индекс: " + proiz); // вспомогательный код (спрятать)
                         rezultat = a*b;
                         System.out.println("Результат: " + rezultat);
                     } else if (delen > 0) {
-                        // System.out.println("Есть знак /, его индекс: " + delen);
+                        // System.out.println("Есть знак /, его индекс: " + delen); // вспомогательный код (спрятать)
                         rezultat = a/b;
                         System.out.println("Результат: " + rezultat);
                     }
                 }
 
             } else if (word == 5) {
-                // System.out.println("Условие 5 символов в строке");
+                // System.out.println("Условие 5 символов в строке"); // вспомогательный код (спрятать)
 
                 int rezultat;
                 if (a>=11 || b>=11) { // ограничение на число до 10 включительно
                     System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
                 } else {
                     if (plus > 0) {
-                        // System.out.println("Есть знак +, его индекс: " + plus);
+                        // System.out.println("Есть знак +, его индекс: " + plus); // вспомогательный код (спрятать)
                         rezultat = a+b;
                         System.out.println("Результат: " + rezultat);
                     } else if (minus > 0) {
-                        // System.out.println("Есть знак -, его индекс: " + minus);
+                        // System.out.println("Есть знак -, его индекс: " + minus); // вспомогательный код (спрятать)
                         rezultat = a-b;
                         System.out.println("Результат: " + rezultat);
                     } else if (proiz > 0) {
-                        // System.out.println("Есть знак *, его индекс: " + proiz);
+                        // System.out.println("Есть знак *, его индекс: " + proiz); // вспомогательный код (спрятать)
                         rezultat = a*b;
                         System.out.println("Результат: " + rezultat);
                     } else if (delen > 0) {
-                        // System.out.println("Есть знак /, его индекс: " + delen);
+                        // System.out.println("Есть знак /, его индекс: " + delen); // вспомогательный код (спрятать)
                         rezultat = a/b;
                         System.out.println("Результат: " + rezultat);
                     }
