@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Kalkulyator {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         System.out.print("Введите выражение: ");
         String primStroka = in.nextLine();
@@ -23,15 +24,18 @@ public class Kalkulyator {
         // System.out.println("Кол-во символов / в строке: " + wordDelen); // вспомогательный код (спрятать)
         // System.out.println("Сумма всех знаков +, -, *, / в строке: " + wordSumZnak); // вспомогательный код (спрятать)
         if (wordSumZnak>1) {
-            System.out.println("Выражение не удовлетворяет условиям задания, так как должно быть два операнда и один оператор (+, -, *, /)");
-            return;
+            throw new IOException(); // Выражение не удовлетворяет условиям задания, так как должно быть два операнда и один оператор (+, -, *, /)
+            /* System.out.println("Выражение не удовлетворяет условиям задания, так как должно быть два операнда и один оператор (+, -, *, /)");
+            return; */
         }
 
         // выводим результат расчёта в зависимости от кол-ва символов в строке ввода
         if (word == 0){
-            System.out.println("Поле пустое, пожалуйста, введите выражение");
+            throw new IOException(); // Поле пустое, пожалуйста, введите выражение
+            // System.out.println("Поле пустое, пожалуйста, введите выражение");
         } else if (word <= 2) {
-            System.out.println("Строка не является математической операцией");
+            throw new IOException(); // Строка не является математической операцией
+            // System.out.println("Строка не является математической операцией");
         } else if (prim.contains("I") || prim.contains("II") || prim.contains("III") || prim.contains("IV") || prim.contains("V") || prim.contains("VI") || prim.contains("VII") || prim.contains("VIII") || prim.contains("IX") || prim.contains("X")) {
             // ====== БЛОК ПО РАБОТЕ С РИМСКИМИ ЦИФРАМИ ======
             // System.out.println("Есть римские цифры: I, II, III, IV, V, VI, VII, VIII, IX, X"); // вспомогательный код (спрятать)
@@ -55,11 +59,13 @@ public class Kalkulyator {
 
             // проверка сроки на наличие арабских и римских цифр с выводом ошибки
             if ((a.contains("I") || a.contains("II") || a.contains("III") || a.contains("IV") || a.contains("V") || a.contains("VI") || a.contains("VII") || a.contains("VIII") || a.contains("IX") || a.contains("X")) && (b.contains("1") || b.contains("2") || b.contains("3") || b.contains("4") || b.contains("5") || b.contains("6") || b.contains("7") || b.contains("8") || b.contains("9") || b.contains("10"))) {
-                System.out.println("Калькулятор не умеет работать одновременно с римскими и арабскими числами");
-                return;
+                throw new IOException(); // Калькулятор не умеет работать одновременно с римскими и арабскими числами
+                /* System.out.println("Калькулятор не умеет работать одновременно с римскими и арабскими числами");
+                return; */
             } else if ((a.contains("1") || a.contains("2") || a.contains("3") || a.contains("4") || a.contains("5") || a.contains("6") || a.contains("7") || a.contains("8") || a.contains("9") || a.contains("10")) && (b.contains("I") || b.contains("II") || b.contains("III") || b.contains("IV") || b.contains("V") || b.contains("VI") || b.contains("VII") || b.contains("VIII") || b.contains("IX") || b.contains("X"))) {
-                System.out.println("Калькулятор не умеет работать одновременно с римскими и арабскими числами");
-                return;
+                throw new IOException(); // Калькулятор не умеет работать одновременно с римскими и арабскими числами
+                /* System.out.println("Калькулятор не умеет работать одновременно с римскими и арабскими числами");
+                return; */
             }
 
             // создаём конвертер для значения a, с переводом строки в число, , при этом первоначальное значение int надо поставить 0, чтобы в System.out.println, в конце вышел результат
@@ -96,8 +102,9 @@ public class Kalkulyator {
                     rimA = Integer.parseInt(String.valueOf(10));
                     break;
                 default:
-                    System.out.println("Калькулятор может работать только с числами от I до X включительно");
-                    return;
+                    throw new IOException(); // Калькулятор может работать только с числами от I до X включительно
+                    /* System.out.println("Калькулятор может работать только с числами от I до X включительно");
+                    return; */
             }
             // System.out.println("Цифра a при конвертации: " + rimA); // вспомогательный код (спрятать)
 
@@ -135,8 +142,9 @@ public class Kalkulyator {
                     rimB = Integer.parseInt(String.valueOf(10));
                     break;
                 default:
-                    System.out.println("Калькулятор может работать только с числами от I до X включительно");
-                    return;
+                    throw new IOException(); // Калькулятор может работать только с числами от I до X включительно
+                    /* System.out.println("Калькулятор может работать только с числами от I до X включительно");
+                    return; */
             }
             // System.out.println("Цифра b при конвертации: " + rimB); // вспомогательный код (спрятать)
 
@@ -151,7 +159,8 @@ public class Kalkulyator {
             } else if (delen > 0) {
                 rezultat = rimA / rimB;
             } else {
-                System.out.println("Ошибка в коде");
+                throw new IOException(); // Ошибка в коде
+                // System.out.println("Ошибка в коде");
             }
             // System.out.println("Результат: " + rezultat); // вспомогательный код (спрятать)
 
@@ -464,11 +473,13 @@ public class Kalkulyator {
                     break;
                 default:
                     if (rezultat<0) {
-                        System.out.println("В римской системе нет отрицательных значений");
+                        throw new IOException(); // В римской системе нет отрицательных значений
+                        // System.out.println("В римской системе нет отрицательных значений");
                     } else {
-                        System.out.println("Расчёт невозможен, так как в римской системе нет цифры 0 (ноль)");
+                        throw new IOException(); // Расчёт невозможен, так как в римской системе нет цифры 0 (ноль)
+                        // System.out.println("Расчёт невозможен, так как в римской системе нет цифры 0 (ноль)");
                     }
-                    return;
+                    // return;
             }
             // System.out.println("Результат обратного перевода в римскую систему счисления через obratnoVRim: " + obratnoVRim); // вспомогательный код (спрятать)
             System.out.println("Результат: " + obratnoVRim + " [" + obratnoVTekst + "]");
@@ -507,8 +518,9 @@ public class Kalkulyator {
             // System.out.println("Перевод строки b в число: " + b); // вспомогательный код (спрятать)
 
             if (a == 0 || b == 0) {
-                System.out.println("Калькулятор работает только с целыми числами от 1 до 10 включительно");
-                return;
+                throw new IOException(); // Калькулятор работает только с целыми числами от 1 до 10 включительно
+                /* System.out.println("Калькулятор работает только с целыми числами от 1 до 10 включительно");
+                return; */
             }
 
             if (word == 3) {
@@ -516,7 +528,8 @@ public class Kalkulyator {
 
                 int rezultat;
                 if (a>=11 || b>=11) { // ограничение на число до 10 включительно
-                    System.out.println("Калькулятор работает только с целыми числами от 1 до 10 включительно");
+                    throw new IOException(); // Калькулятор работает только с целыми числами от 1 до 10 включительно
+                    // System.out.println("Калькулятор работает только с целыми числами от 1 до 10 включительно");
                 } else {
                     if (plus > 0) {
                         // System.out.println("Есть знак +, его индекс: " + plus); // вспомогательный код (спрятать)
@@ -542,7 +555,8 @@ public class Kalkulyator {
 
                 int rezultat;
                 if (a>=11 || b>=11) { // ограничение на число до 10 включительно
-                    System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
+                    throw new IOException(); // Калькулятор может работать только с целыми числами от 1 до 10 включительно
+                    // System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
                 } else {
                     if (plus > 0) {
                         // System.out.println("Есть знак +, его индекс: " + plus); // вспомогательный код (спрятать)
@@ -568,7 +582,8 @@ public class Kalkulyator {
 
                 int rezultat;
                 if (a>=11 || b>=11) { // ограничение на число до 10 включительно
-                    System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
+                    throw new IOException(); // Калькулятор может работать только с целыми числами от 1 до 10 включительно
+                    // System.out.println("Калькулятор может работать только с целыми числами от 1 до 10 включительно");
                 } else {
                     if (plus > 0) {
                         // System.out.println("Есть знак +, его индекс: " + plus); // вспомогательный код (спрятать)
@@ -590,11 +605,13 @@ public class Kalkulyator {
                 }
 
             } else {
-                System.out.println("Выражение не удовлетворяет условиям задания. Калькулятор может работать только с целыми числами от 1 до 10 включительно");
+                throw new IOException(); // Выражение не удовлетворяет условиям задания. Калькулятор может работать только с целыми числами от 1 до 10 включительно
+                // System.out.println("Выражение не удовлетворяет условиям задания. Калькулятор может работать только с целыми числами от 1 до 10 включительно");
             }
 
         } else {
-            System.out.println("Строка не является математической операцией");
+            throw new IOException(); // Строка не является математической операцией
+            // System.out.println("Строка не является математической операцией");
         }
 
     }
